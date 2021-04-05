@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS plane_model;
+DROP TABLE IF EXISTS planes;
