@@ -12,7 +12,7 @@ type Postgres struct {
 }
 
 
-func Initialize(username, password, database string, host string, port int) (*Postgres, error) {
+func Init(username, password, database string, host string, port int) (*Postgres, error) {
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, username, password, database)
 	conn, err := sql.Open("postgres", dsn)

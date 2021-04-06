@@ -4,6 +4,7 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"wingrent/api"
 	"wingrent/database"
@@ -27,17 +28,13 @@ func route() {
 
 func setupPostgresDBFromENV() {
 	dbUser, dbPassword, dbName, dbHost :=
-		"wingrent",
-		"CoolPass123",
-		"wingrent_db",
-		"database"
-		//os.Getenv("POSTGRES_USER"),
-		//os.Getenv("POSTGRES_PASSWORD"),
-		//os.Getenv("POSTGRES_DB"),
-		//os.Getenv("DB_HOST")
+		os.Getenv("POSTGRES_USER"),
+		os.Getenv("POSTGRES_PASSWORD"),
+		os.Getenv("POSTGRES_DB"),
+		os.Getenv("POSTGRES_HOST")
 
-	dbPort, err := strconv.ParseInt("5432", 10, 64)
-	p, err := postgres.Initialize(dbUser, dbPassword, dbName, dbHost, int(dbPort))
+	dbPort, err := strconv.ParseInt(os.Getenv("POSTGRES_PORT"), 10, 64)
+	p, err := postgres.Init(dbUser, dbPassword, dbName, dbHost, int(dbPort))
 	if err != nil {
 		log.Fatalf("Could not set up database: %v", err)
 	}

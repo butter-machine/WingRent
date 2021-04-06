@@ -1,0 +1,26 @@
+version: "3.5"
+services:
+  web:
+    build: ./
+    restart: always
+    ports:
+      - "8080:8080"
+      - "40000:40000"
+      - "5050:5050"
+    security_opt:
+      - "seccomp:unconfined"
+    cap_add:
+      - SYS_PTRACE
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12.2-alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
